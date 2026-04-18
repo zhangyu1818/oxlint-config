@@ -1,0 +1,5 @@
+[
+  { "ruleId": "unicorn/prefer-node-protocol" },
+  { "ruleId": "unicorn/no-new-array" },
+  { "ruleId": "unicorn/explicit-length-check" }
+]

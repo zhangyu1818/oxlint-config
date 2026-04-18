@@ -1,0 +1,4 @@
+[
+  { "ruleId": "typescript/ban-ts-comment" },
+  { "ruleId": "typescript/no-implied-eval" }
+]

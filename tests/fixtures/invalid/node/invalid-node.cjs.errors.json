@@ -1,0 +1,5 @@
+[
+  { "ruleId": "node/no-new-require" },
+  { "ruleId": "node/no-path-concat" },
+  { "ruleId": "node/no-exports-assign" }
+]

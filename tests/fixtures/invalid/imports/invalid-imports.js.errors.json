@@ -1,0 +1,4 @@
+[
+  { "ruleId": "import/no-duplicates" },
+  { "ruleId": "import/no-mutable-exports" }
+]

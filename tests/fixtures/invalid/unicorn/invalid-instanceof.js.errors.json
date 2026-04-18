@@ -1,0 +1,3 @@
+[
+  { "ruleId": "unicorn/no-instanceof-builtins" }
+]
