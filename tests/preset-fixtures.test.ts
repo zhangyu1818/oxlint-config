@@ -23,6 +23,7 @@ async function createTempConfig(filename: string, config: object) {
   const directory = await mkdtemp(join(tmpdir(), 'oxlint-config-'))
   const filepath = join(directory, filename)
   tempDirs.push(directory)
+
   await writeFile(filepath, JSON.stringify(config, null, 2))
   return filepath
 }

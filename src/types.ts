@@ -9,6 +9,12 @@ export interface JsonObject {
 
 export type RuleConfig = Severity | [Severity, ...JsonValue[]]
 export type Rules = Record<string, RuleConfig>
+export interface OxlintJsPluginAlias {
+  name: string
+  specifier: string
+}
+
+export type OxlintJsPlugin = OxlintJsPluginAlias | string
 
 export type OxlintPlugin =
   | 'eslint'
@@ -30,6 +36,7 @@ export type OxlintPlugin =
 export interface OxlintOverride {
   env?: Record<string, boolean>
   files: string[]
+  jsPlugins?: OxlintJsPlugin[]
   plugins?: OxlintPlugin[]
   rules?: Rules
 }
@@ -39,6 +46,7 @@ export interface OxlintConfig {
   categories?: Record<string, Severity>
   env?: Record<string, boolean>
   ignorePatterns?: string[]
+  jsPlugins?: OxlintJsPlugin[]
   options?: {
     typeAware?: boolean
     typeCheck?: boolean
@@ -81,6 +89,7 @@ export interface OxlintPresets {
   next?: boolean | OxlintPresetConfig
   node?: boolean | OxlintPresetConfig
   react?: boolean | OxlintPresetConfig<ReactPresetOptions>
+  reactAgentRules?: boolean | OxlintPresetConfig
   test?: boolean | OxlintPresetConfig
   typescript?: boolean | OxlintPresetConfig<TypeScriptOptions>
   unicorn?: boolean | OxlintPresetConfig
@@ -90,6 +99,7 @@ export interface DefineOxlintConfigOptions {
   categories?: Record<string, Severity>
   env?: Record<string, boolean>
   ignorePatterns?: string[]
+  jsPlugins?: OxlintJsPlugin[]
   overrides?: OxlintOverride[]
   presets?: OxlintPresets
   rules?: Rules

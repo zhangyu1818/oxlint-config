@@ -48,6 +48,8 @@ export const sourceFiles = [
   '**/*.ctsx',
 ]
 
+export const componentFiles = ['**/*.jsx', '**/*.tsx', '**/*.mtsx', '**/*.ctsx']
+
 export const dtsFiles = ['**/*.d.ts', '**/*.d.mts', '**/*.d.cts']
 
 export const jsRequireFiles = ['**/*.js', '**/*.cjs']
@@ -165,6 +167,10 @@ export function pruneOverride(override: OxlintOverride): OxlintOverride | null {
     result.env = override.env
   }
 
+  if (override.jsPlugins && override.jsPlugins.length !== 0) {
+    result.jsPlugins = override.jsPlugins
+  }
+
   if (override.plugins && override.plugins.length !== 0) {
     result.plugins = override.plugins
   }
@@ -173,5 +179,7 @@ export function pruneOverride(override: OxlintOverride): OxlintOverride | null {
     result.rules = override.rules
   }
 
-  return result.rules || result.plugins || result.env ? result : null
+  return result.rules || result.plugins || result.jsPlugins || result.env
+    ? result
+    : null
 }

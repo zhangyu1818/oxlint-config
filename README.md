@@ -2,7 +2,7 @@
 
 Native `oxlint` + `oxfmt` presets for JavaScript and TypeScript projects.
 
-This package only uses functionality that is implemented natively in Oxc. It does not rely on ESLint JS plugins.
+Core presets in this package use functionality implemented natively in Oxc. The `reactAgentRules` preset is backed by an Oxlint JS plugin that ships with this package and auto-enables when `react` is installed.
 
 ## Installation
 
@@ -34,10 +34,17 @@ Available presets:
 - `javascript`
 - `node`
 - `react`
+- `reactAgentRules`
 - `next`
 - `test`
 - `typescript`
 - `unicorn`
+
+Default line limits:
+
+- source files: `300`
+- component files (`*.jsx`, `*.tsx`, `*.mtsx`, `*.ctsx`): `200`
+- test files: `500`
 
 `react` preset options:
 
@@ -51,6 +58,20 @@ react: {
     },
   },
 }
+```
+
+`reactAgentRules` adds the bundled `react-agent-rules` JS plugin preset and applies:
+
+- `react-agent-rules/no-manual-memoization`
+- `react-agent-rules/no-forward-ref`
+- `react-agent-rules/effect-empty-deps-only`
+
+```ts
+export default defineConfig({
+  presets: {
+    react: true,
+  },
+})
 ```
 
 ## Oxfmt

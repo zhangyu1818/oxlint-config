@@ -6,11 +6,16 @@ import { javascriptRules } from './presets/javascript.ts'
 import { nextjsRules } from './presets/next.ts'
 import { nodeRules } from './presets/node.ts'
 import { createReactRules, jsxA11yRules } from './presets/react.ts'
+import {
+  reactAgentRules,
+  reactAgentRulesPlugin,
+} from './presets/react-agent-rules.ts'
 import { vitestRules } from './presets/test.ts'
 import { typeScriptRules } from './presets/typescript.ts'
 import { unicornRules } from './presets/unicorn.ts'
 import {
   appendPlugin,
+  componentFiles,
   dtsFiles,
   dedupe,
   jsRequireFiles,
@@ -40,6 +45,7 @@ export const defaultOxlintPresets = {
   next: isPackageExists('next'),
   node: false,
   react: isPackageExists('react'),
+  reactAgentRules: isPackageExists('react'),
   test: isPackageExists('vitest'),
   typescript: isPackageExists('typescript'),
   unicorn: true,
@@ -62,6 +68,7 @@ export function defineOxlintConfig(
     presets.react,
     defaultOxlintPresets.react,
   )
+  const reactAgentRulesPreset = resolveRulePreset(presets.reactAgentRules, false)
   const testPreset = resolveRulePreset(presets.test, defaultOxlintPresets.test)
   const typeScriptPreset = resolveRulePreset<TypeScriptOptions>(
     presets.typescript,
@@ -71,6 +78,16 @@ export function defineOxlintConfig(
 
   const plugins: OxlintPlugin[] = []
   const rules = mergeRules(
+    {
+      'max-lines': [
+        'error',
+        {
+          max: 300,
+          skipBlankLines: true,
+          skipComments: true,
+        },
+      ],
+    },
     unicornPreset.enabled ? unicornRules : undefined,
     unicornPreset.rules,
     importPreset.enabled ? importRules : undefined,
@@ -79,6 +96,8 @@ export function defineOxlintConfig(
     javascriptPreset.rules,
     nodePreset.enabled ? nodeRules : undefined,
     nodePreset.rules,
+    reactAgentRulesPreset.enabled ? reactAgentRules : undefined,
+    reactAgentRulesPreset.rules,
     options.rules,
   )
 
@@ -126,6 +145,20 @@ export function defineOxlintConfig(
     })
   }
 
+  overrides.push({
+    files: componentFiles,
+    rules: {
+      'max-lines': [
+        'error',
+        {
+          max: 200,
+          skipBlankLines: true,
+          skipComments: true,
+        },
+      ],
+    },
+  })
+
   if (reactPreset.enabled || nextPreset.enabled) {
     const reactOptions = reactPreset.options ?? {}
     const a11y = reactOptions.a11y ?? true
@@ -138,6 +171,11 @@ export function defineOxlintConfig(
       reactRules,
       a11y && reactPreset.enabled ? jsxA11yRules : undefined,
       nextRules,
+      reactAgentRulesPreset.enabled
+        ? {
+            'react/exhaustive-deps': 'off',
+          }
+        : undefined,
       reactPreset.rules,
       nextPreset.rules,
     )
@@ -163,13 +201,24 @@ export function defineOxlintConfig(
     }
   }
 
-  if (testPreset.enabled) {
-    overrides.push({
-      files: testFiles,
-      plugins: ['vitest'],
-      rules: mergeRules(vitestRules, testPreset.rules),
-    })
-  }
+  overrides.push({
+    files: testFiles,
+    plugins: testPreset.enabled ? ['vitest'] : undefined,
+    rules: mergeRules(
+      {
+        'max-lines': [
+          'error',
+          {
+            max: 500,
+            skipBlankLines: true,
+            skipComments: true,
+          },
+        ],
+      },
+      testPreset.enabled ? vitestRules : undefined,
+      testPreset.rules,
+    ),
+  })
 
   const config: OxlintConfig = {
     $schema: './node_modules/oxlint/configuration_schema.json',
@@ -191,6 +240,9 @@ export function defineOxlintConfig(
           ...(options.ignorePatterns ?? []),
         ])
       : options.ignorePatterns,
+    jsPlugins: reactAgentRulesPreset.enabled
+      ? [reactAgentRulesPlugin, ...(options.jsPlugins ?? [])]
+      : options.jsPlugins,
     overrides: [...overrides, ...(options.overrides ?? [])]
       .map(pruneOverride)
       .filter((override): override is OxlintOverride => override !== null),
@@ -210,6 +262,9 @@ export function defineOxlintConfig(
   }
   if (!config.overrides || config.overrides.length === 0) {
     delete config.overrides
+  }
+  if (!config.jsPlugins || config.jsPlugins.length === 0) {
+    delete config.jsPlugins
   }
   if (!config.plugins || config.plugins.length === 0) {
     delete config.plugins
