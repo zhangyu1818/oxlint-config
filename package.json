@@ -1,6 +1,6 @@
 {
   "name": "@zhangyu1818/oxlint-config",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Native Oxlint and Oxfmt config preset package",
   "keywords": [
     "oxc",
