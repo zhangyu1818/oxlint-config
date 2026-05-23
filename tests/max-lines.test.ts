@@ -31,10 +31,15 @@ function createFileContent(
 }
 
 function createJavaScriptModule(totalLines: number) {
-  return createFileContent(totalLines, [], (index) => {
-    const value = index + 1
-    return `export const value${value} = ${value}`
-  }, [])
+  return createFileContent(
+    totalLines,
+    [],
+    (index) => {
+      const value = index + 1
+      return `export const value${value} = ${value}`
+    },
+    [],
+  )
 }
 
 function createComponentFile(totalLines: number) {

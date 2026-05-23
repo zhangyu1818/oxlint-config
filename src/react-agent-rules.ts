@@ -35,10 +35,7 @@ interface CallExpressionNode {
 }
 
 interface RuleContext {
-  report(descriptor: {
-    message: string
-    node: unknown
-  }): void
+  report(descriptor: { message: string; node: unknown }): void
 }
 
 function isRecord(node: unknown): node is Record<string, unknown> {
@@ -46,11 +43,7 @@ function isRecord(node: unknown): node is Record<string, unknown> {
 }
 
 function isIdentifier(node: unknown, name: string): node is IdentifierNode {
-  return (
-    isRecord(node)
-    && node.type === 'Identifier'
-    && node.name === name
-  )
+  return isRecord(node) && node.type === 'Identifier' && node.name === name
 }
 
 function isNamedIdentifier(
@@ -58,38 +51,38 @@ function isNamedIdentifier(
   names: Set<string>,
 ): node is IdentifierNode {
   return (
-    isRecord(node)
-    && node.type === 'Identifier'
-    && typeof node.name === 'string'
-    && names.has(node.name)
+    isRecord(node) &&
+    node.type === 'Identifier' &&
+    typeof node.name === 'string' &&
+    names.has(node.name)
   )
 }
 
 function isMemberExpression(node: unknown): node is MemberExpressionNode {
   return (
-    isRecord(node)
-    && node.type === 'MemberExpression'
-    && typeof node.computed === 'boolean'
-    && 'object' in node
-    && 'property' in node
+    isRecord(node) &&
+    node.type === 'MemberExpression' &&
+    typeof node.computed === 'boolean' &&
+    'object' in node &&
+    'property' in node
   )
 }
 
 function isReactMember(node: unknown, names: Set<string>) {
   return (
-    isMemberExpression(node)
-    && !node.computed
-    && isIdentifier(node.object, 'React')
-    && isNamedIdentifier(node.property, names)
+    isMemberExpression(node) &&
+    !node.computed &&
+    isIdentifier(node.object, 'React') &&
+    isNamedIdentifier(node.property, names)
   )
 }
 
 function isEmptyDependencyArray(node: unknown): node is ArrayExpressionNode {
   return (
-    isRecord(node)
-    && node.type === 'ArrayExpression'
-    && Array.isArray(node.elements)
-    && node.elements.length === 0
+    isRecord(node) &&
+    node.type === 'ArrayExpression' &&
+    Array.isArray(node.elements) &&
+    node.elements.length === 0
   )
 }
 
@@ -101,8 +94,8 @@ const noManualMemoizationRule = {
     return {
       CallExpression(node: CallExpressionNode) {
         if (
-          isNamedIdentifier(node.callee, manualMemoizationNames)
-          || isReactMember(node.callee, manualMemoizationNames)
+          isNamedIdentifier(node.callee, manualMemoizationNames) ||
+          isReactMember(node.callee, manualMemoizationNames)
         ) {
           context.report({
             message: NO_MANUAL_MEMOIZATION_MESSAGE,
@@ -122,8 +115,8 @@ const noForwardRefRule = {
     return {
       CallExpression(node: CallExpressionNode) {
         if (
-          isNamedIdentifier(node.callee, forwardRefNames)
-          || isReactMember(node.callee, forwardRefNames)
+          isNamedIdentifier(node.callee, forwardRefNames) ||
+          isReactMember(node.callee, forwardRefNames)
         ) {
           context.report({
             message: NO_FORWARD_REF_MESSAGE,
@@ -143,8 +136,8 @@ const effectEmptyDepsOnlyRule = {
     return {
       CallExpression(node: CallExpressionNode) {
         if (
-          !isNamedIdentifier(node.callee, effectNames)
-          && !isReactMember(node.callee, effectNames)
+          !isNamedIdentifier(node.callee, effectNames) &&
+          !isReactMember(node.callee, effectNames)
         ) {
           return
         }

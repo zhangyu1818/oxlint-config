@@ -14,10 +14,10 @@ function getPluginSpecifier(plugin: unknown) {
   }
 
   if (
-    plugin
-    && typeof plugin === 'object'
-    && 'specifier' in plugin
-    && typeof plugin.specifier === 'string'
+    plugin &&
+    typeof plugin === 'object' &&
+    'specifier' in plugin &&
+    typeof plugin.specifier === 'string'
   ) {
     return plugin.specifier
   }
@@ -83,7 +83,9 @@ describe('exports', () => {
       'react-agent-rules/no-manual-memoization',
     ].every((rule) => config.rules?.[rule] === 'error')
 
-    expect(defaultOxlintPresets.reactAgentRules).toBe(defaultOxlintPresets.react)
+    expect(defaultOxlintPresets.reactAgentRules).toBe(
+      defaultOxlintPresets.react,
+    )
     expect(Boolean(hasPlugin)).toBe(defaultOxlintPresets.reactAgentRules)
     expect(Boolean(hasRules)).toBe(defaultOxlintPresets.reactAgentRules)
   })

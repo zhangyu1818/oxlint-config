@@ -1,6 +1,6 @@
 {
   "name": "@zhangyu1818/oxlint-config",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Native Oxlint and Oxfmt config preset package",
   "keywords": [
     "oxc",
@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zhangyu1818/oxlint-config.git"
+    "url": "git+https://github.com/zhangyu1818/oxlint-config.git"
   },
   "files": [
     "dist"
@@ -32,28 +32,29 @@
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "test": "vitest --run",
+    "test:smoke": "node tests/package-smoke.mjs",
     "test:watch": "vitest",
     "tsc:check": "tsc"
   },
   "dependencies": {
-    "local-pkg": "^1.1.2"
+    "local-pkg": "^1.2.1"
   },
   "devDependencies": {
-    "@types/node": "^25.5.0",
-    "oxfmt": "^0.45.0",
-    "oxlint": "^1.60.0",
-    "oxlint-tsgolint": "^0.21.1",
+    "@types/node": "^25.9.1",
+    "oxfmt": "^0.51.0",
+    "oxlint": "^1.66.0",
+    "oxlint-tsgolint": "^0.23.0",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3",
-    "vitest": "^4.1.0"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.7"
   },
   "peerDependencies": {
-    "oxfmt": "^0.45.0",
-    "oxlint": "^1.60.0",
-    "oxlint-tsgolint": "^0.21.1"
+    "oxfmt": "^0.51.0",
+    "oxlint": "^1.66.0",
+    "oxlint-tsgolint": "^0.23.0"
   },
   "engines": {
     "node": "^20.19.0 || ^22.13.0 || >=24"
   },
-  "packageManager": "pnpm@10.32.1"
+  "packageManager": "pnpm@11.2.2"
 }

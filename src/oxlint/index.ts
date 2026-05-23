@@ -5,11 +5,11 @@ import { importRules } from './presets/imports.ts'
 import { javascriptRules } from './presets/javascript.ts'
 import { nextjsRules } from './presets/next.ts'
 import { nodeRules } from './presets/node.ts'
-import { createReactRules, jsxA11yRules } from './presets/react.ts'
 import {
   reactAgentRules,
   reactAgentRulesPlugin,
 } from './presets/react-agent-rules.ts'
+import { createReactRules, jsxA11yRules } from './presets/react.ts'
 import { vitestRules } from './presets/test.ts'
 import { typeScriptRules } from './presets/typescript.ts'
 import { unicornRules } from './presets/unicorn.ts'
@@ -68,7 +68,10 @@ export function defineOxlintConfig(
     presets.react,
     defaultOxlintPresets.react,
   )
-  const reactAgentRulesPreset = resolveRulePreset(presets.reactAgentRules, false)
+  const reactAgentRulesPreset = resolveRulePreset(
+    presets.reactAgentRules,
+    false,
+  )
   const testPreset = resolveRulePreset(presets.test, defaultOxlintPresets.test)
   const typeScriptPreset = resolveRulePreset<TypeScriptOptions>(
     presets.typescript,
