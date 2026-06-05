@@ -97,8 +97,8 @@ export default defineOxfmtConfig({
 ```json
 {
   "scripts": {
-    "lint": "oxlint",
-    "lint:fix": "oxlint --fix",
+    "lint": "oxlint -c oxlint.config.ts",
+    "lint:fix": "oxlint --fix -c oxlint.config.ts",
     "format": "oxfmt -c oxfmt.config.ts .",
     "format:check": "oxfmt --check -c oxfmt.config.ts ."
   }
@@ -109,5 +109,5 @@ export default defineOxfmtConfig({
 
 - Prefer existing project scripts if present
 - Otherwise run:
-  - `pnpm exec oxlint`
+  - `pnpm exec oxlint -c oxlint.config.ts`
   - `pnpm exec oxfmt --check -c oxfmt.config.ts .`

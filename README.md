@@ -104,8 +104,8 @@ Default formatter options:
 ```json
 {
   "scripts": {
-    "lint": "oxlint",
-    "lint:fix": "oxlint --fix",
+    "lint": "oxlint -c oxlint.config.ts",
+    "lint:fix": "oxlint --fix -c oxlint.config.ts",
     "format": "oxfmt -c oxfmt.config.ts .",
     "format:check": "oxfmt --check -c oxfmt.config.ts ."
   }
