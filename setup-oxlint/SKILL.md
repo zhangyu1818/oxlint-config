@@ -7,7 +7,7 @@ description: Use when setting up native Oxc linting and formatting in a JS/TS pr
 
 ## Scope
 
-- Confirm the project and CI can satisfy Node.js `^20.19.0 || ^22.13.0 || >=24`
+- Confirm the project and CI can satisfy Node.js `>=24`
 - Ensure `@zhangyu1818/oxlint-config`, `oxlint`, and `oxfmt` are in devDependencies
 - Ensure `oxlint-tsgolint` is installed when `typescript` is present
 - Create or update `oxlint.config.*` using `defineConfig`
@@ -18,7 +18,7 @@ description: Use when setting up native Oxc linting and formatting in a JS/TS pr
 ## Workflow
 
 1. Inspect project state (`package.json`, lockfiles, Node version, existing lint and format configs)
-2. Confirm Node.js compatibility with `^20.19.0 || ^22.13.0 || >=24`; if not, stop and report the blocker
+2. Confirm Node.js compatibility with `>=24`; if not, stop and report the blocker
 3. Install or upgrade dependencies:
    - `@zhangyu1818/oxlint-config`
    - `oxlint`
