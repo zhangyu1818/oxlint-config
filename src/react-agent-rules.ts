@@ -4,12 +4,16 @@ const NO_MANUAL_MEMOIZATION_MESSAGE =
 const NO_FORWARD_REF_MESSAGE =
   'Starting in React 19, ref is a prop, so forwardRef is no longer needed.'
 
+const NO_USE_CONTEXT_MESSAGE =
+  'In React 19, use is preferred over useContext for reading context because it is more flexible.'
+
 const EFFECT_EMPTY_DEPS_ONLY_MESSAGE =
   'Effects here must use an empty dependency array. Use them only for mount and unmount logic. For event-driven logic, use useEffectEvent inside the effect. Do not use effects as a watch mechanism.'
 
 const manualMemoizationNames = new Set(['memo', 'useMemo', 'useCallback'])
 const effectNames = new Set(['useEffect', 'useLayoutEffect'])
 const forwardRefNames = new Set(['forwardRef'])
+const useContextNames = new Set(['useContext'])
 
 interface IdentifierNode {
   name: string
@@ -128,6 +132,27 @@ const noForwardRefRule = {
   },
 }
 
+const noUseContextRule = {
+  meta: {
+    schema: [],
+  },
+  create(context: RuleContext) {
+    return {
+      CallExpression(node: CallExpressionNode) {
+        if (
+          isNamedIdentifier(node.callee, useContextNames) ||
+          isReactMember(node.callee, useContextNames)
+        ) {
+          context.report({
+            message: NO_USE_CONTEXT_MESSAGE,
+            node,
+          })
+        }
+      },
+    }
+  },
+}
+
 const effectEmptyDepsOnlyRule = {
   meta: {
     schema: [],
@@ -163,6 +188,7 @@ const plugin = {
     'effect-empty-deps-only': effectEmptyDepsOnlyRule,
     'no-forward-ref': noForwardRefRule,
     'no-manual-memoization': noManualMemoizationRule,
+    'no-use-context': noUseContextRule,
   },
 }
 

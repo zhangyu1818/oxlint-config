@@ -21,4 +21,5 @@ export const reactAgentRules: Rules = {
   'react-agent-rules/effect-empty-deps-only': 'error',
   'react-agent-rules/no-forward-ref': 'error',
   'react-agent-rules/no-manual-memoization': 'error',
+  'react-agent-rules/no-use-context': 'error',
 }

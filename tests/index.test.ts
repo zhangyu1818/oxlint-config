@@ -60,7 +60,18 @@ describe('exports', () => {
       'react-agent-rules/effect-empty-deps-only': 'error',
       'react-agent-rules/no-forward-ref': 'error',
       'react-agent-rules/no-manual-memoization': 'error',
+      'react-agent-rules/no-use-context': 'error',
     })
+    expect(config.overrides).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          jsPlugins: expect.arrayContaining([expect.anything()]),
+          rules: expect.objectContaining({
+            'react-agent-rules/no-use-context': 'error',
+          }),
+        }),
+      ]),
+    )
     expect(config.rules).not.toHaveProperty('no-restricted-imports')
 
     const reactOverride = config.overrides?.find((override) =>
@@ -81,6 +92,7 @@ describe('exports', () => {
       'react-agent-rules/effect-empty-deps-only',
       'react-agent-rules/no-forward-ref',
       'react-agent-rules/no-manual-memoization',
+      'react-agent-rules/no-use-context',
     ].every((rule) => config.rules?.[rule] === 'error')
 
     expect(defaultOxlintPresets.reactAgentRules).toBe(

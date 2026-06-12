@@ -65,6 +65,7 @@ react: {
 - `react-agent-rules/no-manual-memoization`
 - `react-agent-rules/no-forward-ref`
 - `react-agent-rules/effect-empty-deps-only`
+- `react-agent-rules/no-use-context`
 
 ```ts
 export default defineConfig({

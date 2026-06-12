@@ -158,6 +158,75 @@ describe('react-agent-rules preset', () => {
     expect(output).toContain('Effects here must use an empty dependency array')
   })
 
+  it('reports useContext usage', async () => {
+    const directory = await createWorkspace()
+    const configFile = await createConfig(directory)
+    const filepath = await writeFileInWorkspace(
+      directory,
+      'src/context.tsx',
+      `
+        import React, { createContext, use, useContext } from 'react'
+
+        const ThemeContext = createContext('light')
+
+        export function InvalidA() {
+          return useContext(ThemeContext)
+        }
+
+        export function InvalidB() {
+          return React.useContext(ThemeContext)
+        }
+
+        export function Valid() {
+          return use(ThemeContext)
+        }
+      `,
+    )
+
+    const output = await lintFile(directory, configFile, filepath)
+
+    expect(output).toContain('use is preferred over useContext')
+  })
+
+  it('loads bundled rules through package config extends', async () => {
+    const directory = await createWorkspace()
+    await createConfig(directory)
+    const packageDirectory = join(directory, 'packages/react-app')
+
+    await mkdir(packageDirectory, { recursive: true })
+    await writeFile(
+      join(packageDirectory, 'oxlint.config.json'),
+      JSON.stringify(
+        {
+          extends: ['../../oxlint.config.json'],
+        },
+        null,
+        2,
+      ),
+    )
+    const filepath = await writeFileInWorkspace(
+      packageDirectory,
+      'src/context.tsx',
+      `
+        import { createContext, useContext } from 'react'
+
+        const ThemeContext = createContext('light')
+
+        export function Invalid() {
+          return useContext(ThemeContext)
+        }
+      `,
+    )
+
+    const output = await lintFile(
+      packageDirectory,
+      'oxlint.config.json',
+      filepath,
+    )
+
+    expect(output).toContain('use is preferred over useContext')
+  })
+
   it('accepts empty dependency arrays', async () => {
     const directory = await createWorkspace()
     const configFile = await createConfig(directory)
@@ -192,6 +261,7 @@ describe('react-agent-rules preset', () => {
           memo,
           useCallback,
           useEffect,
+          useContext,
           useLayoutEffect,
           useMemo,
         } from 'react'
@@ -202,6 +272,7 @@ describe('react-agent-rules preset', () => {
           memo,
           useCallback,
           useEffect,
+          useContext,
           useLayoutEffect,
           useMemo,
         }

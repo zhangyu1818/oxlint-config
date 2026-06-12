@@ -20,6 +20,7 @@ import {
   dedupe,
   jsRequireFiles,
   mergeRules,
+  pickRules,
   pruneOverride,
   resolveIgnorePreset,
   resolveRulePreset,
@@ -78,6 +79,15 @@ export function defineOxlintConfig(
     defaultOxlintPresets.typescript,
   )
   const unicornPreset = resolveRulePreset(presets.unicorn, true)
+  const reactAgentRulesForSourceFiles = reactAgentRulesPreset.enabled
+    ? mergeRules(
+        reactAgentRules,
+        reactAgentRulesPreset.rules,
+        pickRules(options.rules, (rule) =>
+          rule.startsWith('react-agent-rules/'),
+        ),
+      )
+    : undefined
 
   const plugins: OxlintPlugin[] = []
   const rules = mergeRules(
@@ -118,6 +128,14 @@ export function defineOxlintConfig(
   }
 
   const overrides: OxlintOverride[] = []
+
+  if (reactAgentRulesPreset.enabled && reactAgentRulesForSourceFiles) {
+    overrides.push({
+      files: sourceFiles,
+      jsPlugins: [reactAgentRulesPlugin],
+      rules: reactAgentRulesForSourceFiles,
+    })
+  }
 
   if (javascriptPreset.enabled) {
     overrides.push({
@@ -236,6 +254,8 @@ export function defineOxlintConfig(
       node: true,
       ...(options.env ?? {}),
     },
+    extends: options.extends,
+    globals: options.globals,
     ignorePatterns: ignorePreset.enabled
       ? dedupe([
           ...defaultIgnorePatterns,
@@ -262,6 +282,12 @@ export function defineOxlintConfig(
 
   if (!config.ignorePatterns || config.ignorePatterns.length === 0) {
     delete config.ignorePatterns
+  }
+  if (!config.extends || config.extends.length === 0) {
+    delete config.extends
+  }
+  if (!config.globals || Object.keys(config.globals).length === 0) {
+    delete config.globals
   }
   if (!config.overrides || config.overrides.length === 0) {
     delete config.overrides

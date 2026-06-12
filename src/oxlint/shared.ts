@@ -4,6 +4,7 @@ import type {
   IgnorePresetConfig,
   OxlintOverride,
   OxlintPlugin,
+  RuleConfig,
   Rules,
 } from '../types.ts'
 
@@ -150,6 +151,19 @@ export function mergeRules(...entries: (Rules | undefined)[]) {
   return Object.assign({}, ...entries)
 }
 
+export function pickRules(
+  rules: Rules | undefined,
+  predicate: (rule: string) => boolean,
+) {
+  if (!rules) {
+    return {}
+  }
+
+  return Object.fromEntries(
+    Object.entries(rules).filter(([rule]) => predicate(rule)),
+  ) as Record<string, RuleConfig>
+}
+
 export function appendPlugin(plugins: OxlintPlugin[], plugin: OxlintPlugin) {
   if (!plugins.includes(plugin)) {
     plugins.push(plugin)
@@ -167,6 +181,14 @@ export function pruneOverride(override: OxlintOverride): OxlintOverride | null {
     result.env = override.env
   }
 
+  if (override.excludeFiles && override.excludeFiles.length !== 0) {
+    result.excludeFiles = override.excludeFiles
+  }
+
+  if (override.globals && Object.keys(override.globals).length !== 0) {
+    result.globals = override.globals
+  }
+
   if (override.jsPlugins && override.jsPlugins.length !== 0) {
     result.jsPlugins = override.jsPlugins
   }
@@ -179,7 +201,11 @@ export function pruneOverride(override: OxlintOverride): OxlintOverride | null {
     result.rules = override.rules
   }
 
-  return result.rules || result.plugins || result.jsPlugins || result.env
+  return result.rules ||
+    result.plugins ||
+    result.jsPlugins ||
+    result.env ||
+    result.globals
     ? result
     : null
 }

@@ -9,6 +9,14 @@ export interface JsonObject {
 
 export type RuleConfig = Severity | [Severity, ...JsonValue[]]
 export type Rules = Record<string, RuleConfig>
+export type OxlintGlobalValue =
+  | 'off'
+  | 'readable'
+  | 'readonly'
+  | 'writable'
+  | 'writeable'
+  | boolean
+export type OxlintGlobals = Record<string, OxlintGlobalValue>
 export interface OxlintJsPluginAlias {
   name: string
   specifier: string
@@ -35,7 +43,9 @@ export type OxlintPlugin =
 
 export interface OxlintOverride {
   env?: Record<string, boolean>
+  excludeFiles?: string[]
   files: string[]
+  globals?: OxlintGlobals
   jsPlugins?: OxlintJsPlugin[]
   plugins?: OxlintPlugin[]
   rules?: Rules
@@ -45,6 +55,8 @@ export interface OxlintConfig {
   $schema?: string
   categories?: Record<string, Severity>
   env?: Record<string, boolean>
+  extends?: string[]
+  globals?: OxlintGlobals
   ignorePatterns?: string[]
   jsPlugins?: OxlintJsPlugin[]
   options?: {
@@ -98,6 +110,8 @@ export interface OxlintPresets {
 export interface DefineOxlintConfigOptions {
   categories?: Record<string, Severity>
   env?: Record<string, boolean>
+  extends?: string[]
+  globals?: OxlintGlobals
   ignorePatterns?: string[]
   jsPlugins?: OxlintJsPlugin[]
   overrides?: OxlintOverride[]

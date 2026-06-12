@@ -17,6 +17,8 @@ export type {
   OxfmtOverride,
   OxfmtPresetConfig,
   OxfmtPresets,
+  OxlintGlobalValue,
+  OxlintGlobals,
   OxlintConfig,
   OxlintJsPlugin,
   OxlintJsPluginAlias,
