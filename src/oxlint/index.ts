@@ -70,8 +70,8 @@ export function defineOxlintConfig(
     defaultOxlintPresets.react,
   )
   const reactAgentRulesPreset = resolveRulePreset(
-    presets.reactAgentRules,
-    false,
+    options.presets?.reactAgentRules,
+    reactPreset.enabled,
   )
   const testPreset = resolveRulePreset(presets.test, defaultOxlintPresets.test)
   const typeScriptPreset = resolveRulePreset<TypeScriptOptions>(

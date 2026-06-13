@@ -102,6 +102,37 @@ describe('exports', () => {
     expect(Boolean(hasRules)).toBe(defaultOxlintPresets.reactAgentRules)
   })
 
+  it('enables react-agent-rules when react is explicitly turned on', () => {
+    const config = defineConfig({
+      presets: {
+        react: true,
+      },
+    })
+    const pluginSpecifier = getPluginSpecifier(config.jsPlugins?.[0])
+
+    expect(pluginSpecifier).toContain('react-agent-rules')
+    expect(config.rules).toMatchObject({
+      'react-agent-rules/no-manual-memoization': 'error',
+    })
+  })
+
+  it('keeps react-agent-rules off when explicitly disabled', () => {
+    const config = defineConfig({
+      presets: {
+        react: true,
+        reactAgentRules: false,
+      },
+    })
+    const hasAgentPlugin = (config.jsPlugins ?? []).some((plugin) =>
+      getPluginSpecifier(plugin)?.includes('react-agent-rules'),
+    )
+
+    expect(hasAgentPlugin).toBe(false)
+    expect(config.rules).not.toHaveProperty(
+      'react-agent-rules/no-manual-memoization',
+    )
+  })
+
   it('builds an oxfmt config with native sorters', () => {
     const config = defineOxfmtConfig({
       presets: {
