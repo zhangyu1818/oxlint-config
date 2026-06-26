@@ -26,7 +26,7 @@
     }
   },
   "scripts": {
-    "build": "tsup",
+    "build": "tsdown",
     "format": "oxfmt -c oxfmt.config.ts .",
     "format:check": "oxfmt --check -c oxfmt.config.ts .",
     "lint": "oxlint -c oxlint.config.ts",
@@ -41,20 +41,20 @@
   },
   "devDependencies": {
     "@types/node": "^25.9.3",
-    "oxfmt": "^0.54.0",
-    "oxlint": "^1.69.0",
+    "oxfmt": "^0.56.0",
+    "oxlint": "^1.71.0",
     "oxlint-tsgolint": "^0.23.0",
-    "tsup": "^8.5.1",
+    "tsdown": "^0.22.3",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.9"
   },
   "peerDependencies": {
-    "oxfmt": "^0.54.0",
-    "oxlint": "^1.69.0",
+    "oxfmt": "^0.56.0",
+    "oxlint": "^1.71.0",
     "oxlint-tsgolint": "^0.23.0"
   },
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "pnpm@11.2.2"
+  "packageManager": "pnpm@11.9.0"
 }

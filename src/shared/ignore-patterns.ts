@@ -11,6 +11,7 @@ export const defaultIgnorePatterns = [
   '**/.temp',
   '**/tmp',
   '**/.tmp',
+  '.tmp-*',
   '**/.history',
   '**/.vitepress/cache',
   '**/.nuxt',

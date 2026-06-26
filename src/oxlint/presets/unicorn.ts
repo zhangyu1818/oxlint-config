@@ -22,7 +22,6 @@ export const unicornRules: Rules = {
   'unicorn/prefer-number-properties': 'error',
   'unicorn/prefer-query-selector': 'error',
   'unicorn/prefer-string-raw': 'error',
-  'unicorn/prefer-string-starts-ends-with': 'error',
   'unicorn/prefer-type-error': 'error',
   'unicorn/throw-new-error': 'error',
 }
