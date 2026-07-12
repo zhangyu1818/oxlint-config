@@ -1,4 +1,5 @@
 import { execFile } from 'node:child_process'
+import { join } from 'node:path'
 import { promisify } from 'node:util'
 
 import { describe, expect, it } from 'vitest'
@@ -8,8 +9,6 @@ import { defineConfig } from '../src/index'
 const execFileAsync = promisify(execFile)
 
 const missingNativeRules = [
-  'import/newline-after-import',
-  'no-unreachable-loop',
   'one-var',
   'no-restricted-syntax',
   'node/hashbang',
@@ -17,11 +16,13 @@ const missingNativeRules = [
   'node/prefer-global/buffer',
   'node/prefer-global/process',
   'node/process-exit-as-throw',
-  '@typescript-eslint/method-signature-style',
   'react/no-deprecated',
-  'react/no-unstable-nested-components',
   'react/function-component-definition',
 ] as const
+
+function resolveOxlintBinary() {
+  return join(process.cwd(), 'node_modules/.bin/oxlint')
+}
 
 describe('native rule availability', () => {
   it('does not export migration report from runtime api', async () => {
@@ -56,16 +57,25 @@ describe('native rule availability', () => {
 
   it('verifies the remaining missing rules are absent from current oxlint', async () => {
     const { stdout } = await execFileAsync(
-      'pnpm',
-      ['exec', 'oxlint', '--rules'],
+      resolveOxlintBinary(),
+      ['--rules', '--format=json'],
       {
         cwd: process.cwd(),
+        maxBuffer: 30 * 1024 * 1024,
       },
+    )
+    const registered = JSON.parse(stdout) as { scope: string; value: string }[]
+    const available = new Set(
+      registered.map((entry) =>
+        entry.scope === 'eslint'
+          ? entry.value
+          : `${entry.scope.replace(/_/g, '-')}/${entry.value}`,
+      ),
     )
 
     for (const rule of missingNativeRules) {
       const candidate = rule.replace('@typescript-eslint/', 'typescript/')
-      expect(stdout.includes(rule) || stdout.includes(candidate)).toBe(false)
+      expect(available.has(rule) || available.has(candidate)).toBe(false)
     }
   })
 })

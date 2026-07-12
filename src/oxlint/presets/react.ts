@@ -84,6 +84,7 @@ const baseReactRules: Rules = {
   'react/no-string-refs': 'error',
   'react/no-unknown-property': 'error',
   'react/no-unescaped-entities': 'error',
+  'react/no-unstable-nested-components': 'error',
   'react/react-in-jsx-scope': 'off',
   'react/require-render-return': 'error',
   'react/rules-of-hooks': 'error',

@@ -85,6 +85,7 @@ async function createTempConfig(directory: string) {
   const filepath = join(directory, 'oxlint.config.json')
   const config = defineConfig({
     presets: {
+      imports: false,
       next: false,
       node: false,
       react: true,
