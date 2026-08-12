@@ -9,7 +9,6 @@ import { defineConfig } from '../src/index'
 const execFileAsync = promisify(execFile)
 
 const missingNativeRules = [
-  'one-var',
   'no-restricted-syntax',
   'node/hashbang',
   'node/no-deprecated-api',
@@ -17,7 +16,6 @@ const missingNativeRules = [
   'node/prefer-global/process',
   'node/process-exit-as-throw',
   'react/no-deprecated',
-  'react/function-component-definition',
 ] as const
 
 function resolveOxlintBinary() {

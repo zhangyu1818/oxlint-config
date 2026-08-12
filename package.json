@@ -1,6 +1,6 @@
 {
   "name": "@zhangyu1818/oxlint-config",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Native Oxlint and Oxfmt config preset package",
   "keywords": [
     "oxc",
@@ -40,21 +40,21 @@
     "local-pkg": "^1.2.1"
   },
   "devDependencies": {
-    "@types/node": "^26.1.1",
-    "oxfmt": "^0.58.0",
-    "oxlint": "^1.73.0",
-    "oxlint-tsgolint": "^0.24.0",
-    "tsdown": "^0.22.5",
+    "@types/node": "^26.2.0",
+    "oxfmt": "^0.63.0",
+    "oxlint": "^1.78.0",
+    "oxlint-tsgolint": "^7.0.2001",
+    "tsdown": "^0.22.14",
     "typescript": "^7.0.2",
     "vitest": "^4.1.10"
   },
   "peerDependencies": {
-    "oxfmt": "^0.58.0",
-    "oxlint": "^1.73.0",
-    "oxlint-tsgolint": "^0.24.0"
+    "oxfmt": "^0.63.0",
+    "oxlint": "^1.78.0",
+    "oxlint-tsgolint": "^7.0.2001"
   },
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "pnpm@11.9.0"
+  "packageManager": "pnpm@11.21.0"
 }

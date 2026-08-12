@@ -14,8 +14,12 @@ const UnescapedEntity: FC = () => <div>Don't do this</div>
 
 const UnnecessaryBraces: FC = () => <div className={'container'}>Content</div>
 const NotSelfClosing: FC = () => <div></div>
+const InvalidComponent = function () {
+  return <div />
+}
 
 export {
+  InvalidComponent,
   List,
   NotSelfClosing,
   UnescapedEntity,

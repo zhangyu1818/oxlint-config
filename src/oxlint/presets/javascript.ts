@@ -128,6 +128,7 @@ export const javascriptRules: Rules = {
   'no-useless-return': 'error',
   'no-var': 'error',
   'no-with': 'error',
+  'one-var': ['error', { initialized: 'never' }],
   'object-shorthand': [
     'error',
     'always',

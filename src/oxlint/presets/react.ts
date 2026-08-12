@@ -59,6 +59,13 @@ export const jsxA11yRules: Rules = {
 
 const baseReactRules: Rules = {
   'react/exhaustive-deps': 'warn',
+  'react/function-component-definition': [
+    'error',
+    {
+      namedComponents: ['arrow-function', 'function-declaration'],
+      unnamedComponents: 'arrow-function',
+    },
+  ],
   'react/jsx-boolean-value': 'error',
   'react/jsx-curly-brace-presence': [
     'error',

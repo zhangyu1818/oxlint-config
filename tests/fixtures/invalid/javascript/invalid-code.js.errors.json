@@ -2,5 +2,6 @@
   { "ruleId": "no-var" },
   { "ruleId": "no-console" },
   { "ruleId": "eqeqeq" },
-  { "ruleId": "no-debugger" }
+  { "ruleId": "no-debugger" },
+  { "ruleId": "one-var" }
 ]

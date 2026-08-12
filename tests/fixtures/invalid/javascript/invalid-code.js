@@ -16,4 +16,7 @@ if (oldStyle == 'bad') {
 let shouldBeConst = 'immutable'
 shouldBeConst = 'still immutable'
 
-export { oldStyle, shouldBeConst }
+const first = 'first',
+  second = 'second'
+
+export { first, oldStyle, second, shouldBeConst }
