@@ -111,3 +111,4 @@ export default defineOxfmtConfig({
 - Otherwise run:
   - `pnpm exec oxlint -c oxlint.config.ts`
   - `pnpm exec oxfmt --check -c oxfmt.config.ts .`
+- In React projects, the `react` preset enables native React Compiler rules (`purity`, `set-state-in-effect`, `refs`, and others). Treat newly reported violations as real code issues and fix the code; do not disable these rules during setup

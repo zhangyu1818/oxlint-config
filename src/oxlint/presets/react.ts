@@ -58,6 +58,7 @@ export const jsxA11yRules: Rules = {
 }
 
 const baseReactRules: Rules = {
+  'react/error-boundaries': 'error',
   'react/exhaustive-deps': 'warn',
   'react/function-component-definition': [
     'error',
@@ -66,6 +67,9 @@ const baseReactRules: Rules = {
       unnamedComponents: 'arrow-function',
     },
   ],
+  'react/globals': 'error',
+  'react/immutability': 'error',
+  'react/incompatible-library': 'error',
   'react/jsx-boolean-value': 'error',
   'react/jsx-curly-brace-presence': [
     'error',
@@ -92,7 +96,10 @@ const baseReactRules: Rules = {
   'react/no-unknown-property': 'error',
   'react/no-unescaped-entities': 'error',
   'react/no-unstable-nested-components': 'error',
+  'react/preserve-manual-memoization': 'error',
+  'react/purity': 'error',
   'react/react-in-jsx-scope': 'off',
+  'react/refs': 'error',
   'react/require-render-return': 'error',
   'react/rules-of-hooks': 'error',
   'react/self-closing-comp': [
@@ -102,7 +109,13 @@ const baseReactRules: Rules = {
       html: true,
     },
   ],
+  'react/set-state-in-effect': 'error',
+  'react/set-state-in-render': 'error',
+  'react/static-components': 'error',
+  'react/unsupported-syntax': 'error',
+  'react/use-memo': 'error',
   'react/void-dom-elements-no-children': 'error',
+  'react/void-use-memo': 'error',
 }
 
 export function createReactRules(

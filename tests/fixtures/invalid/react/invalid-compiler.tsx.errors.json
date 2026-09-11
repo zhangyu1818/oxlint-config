@@ -1,0 +1,4 @@
+[
+  { "ruleId": "react/purity" },
+  { "ruleId": "react/set-state-in-effect" }
+]
