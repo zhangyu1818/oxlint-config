@@ -37,24 +37,24 @@
     "tsc:check": "tsc"
   },
   "dependencies": {
-    "local-pkg": "^1.2.1"
+    "local-pkg": "^2.0.0"
   },
   "devDependencies": {
-    "@types/node": "^26.6.5",
-    "oxfmt": "^0.74.0",
-    "oxlint": "^1.89.0",
-    "oxlint-tsgolint": "^7.0.2005",
+    "@types/node": "^26.6.6",
+    "oxfmt": "^0.77.0",
+    "oxlint": "^1.92.0",
+    "oxlint-tsgolint": "^7.0.2006",
     "tsdown": "0.23.1",
     "typescript": "^7.0.2",
-    "vitest": "^5.0.5"
+    "vitest": "^5.1.0"
   },
   "peerDependencies": {
-    "oxfmt": "^0.74.0",
+    "oxfmt": "^0.77.0",
     "oxlint": "^1.79.0",
     "oxlint-tsgolint": "^7.0.2001"
   },
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "pnpm@12.15.0"
+  "packageManager": "pnpm@12.18.0"
 }
